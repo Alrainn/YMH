@@ -29,7 +29,7 @@ class AIAssistant:
                 Varsayılan: "gpt-3.5-turbo".
         """
         self.client: OpenAI = OpenAI(api_key=api_key or os.getenv("OPENAI_API_KEY"))
-        self.model_name: str = model_name
+        self.model_name: str = model_name if model_name != "gpt-3.5-turbo-ft" else os.getenv("FINE_TUNED_MODEL", "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-006:BdOcBDoD")
         
         # İlaç arama optimizasyonu için sabitler
         self.drug_name_variations = {
