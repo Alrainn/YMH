@@ -18,7 +18,7 @@ def main():
     file_path = "Fine-tuning-data/Endise/Data_2.jsonl"
     
     # Model adını .env'den al
-    model_name = os.getenv("FINE_TUNED_MODEL", "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-004:Bcd1AELh")
+    model_name = os.getenv("FINE_TUNED_MODEL", "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-006:BdOcBDoD")
     
     # Dosyanın varlığını kontrol et
     if not os.path.exists(file_path):
