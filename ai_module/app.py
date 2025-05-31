@@ -99,7 +99,7 @@ def generate_natural_response(drug_name: str, raw_response: str, conversation_hi
     if model_name == "gpt-4":
         model = "gpt-4"
     elif model_name == "gpt-3.5-turbo-ft":
-        model = os.getenv("FINE_TUNED_MODEL", "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-004:Bcd1AELh")
+        model = os.getenv("FINE_TUNED_MODEL", "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-006:BdOcBDoD")
     else:
         model = model_name
     
@@ -154,7 +154,7 @@ def simple_chat_response(message: str, conversation_history: List[Dict], model_n
     if model_name == "gpt-4":
         model = "gpt-4"
     elif model_name == "gpt-3.5-turbo-ft":
-        model = os.getenv("FINE_TUNED_MODEL", "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-004:Bcd1AELh")
+        model = os.getenv("FINE_TUNED_MODEL", "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-006:BdOcBDoD")
     else:
         model = model_name
     
