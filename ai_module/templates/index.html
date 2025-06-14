@@ -3,257 +3,582 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İlaç Bilgi Asistanı</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Sağlık Asistanı</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #ffffff;
+            --text-color: #374151;
+            --border-color: #e5e7eb;
+            --hover-color: #f3f4f6;
+            --assistant-bg: #f9fafb;
+            --user-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #f8f9fa;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
+
         .chat-container {
-            height: 500px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
             overflow-y: auto;
-            border: 1px solid #dee2e6;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            background-color: white;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
+
         .message {
-            margin-bottom: 1rem;
-            padding: 0.75rem 1.25rem;
-            border-radius: 1.25rem;
-            max-width: 90%;
-            line-height: 1.5;
-            word-wrap: break-word;
+            display: flex;
+            gap: 12px;
+            padding: 16px;
+            border-radius: 8px;
+            animation: fadeIn 0.3s ease-in-out;
         }
-        .user-message {
-            background-color: #007bff;
+
+        .message.assistant {
+            background-color: var(--assistant-bg);
+        }
+
+        .message.user {
+            background-color: var(--user-bg);
+            border: 1px solid var(--border-color);
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            margin-left: auto;
-            border-bottom-right-radius: 0.25rem;
+            font-weight: 600;
+            flex-shrink: 0;
         }
-        .assistant-message {
-            background-color: #f1f3f5;
-            margin-right: auto;
-            border-bottom-left-radius: 0.25rem;
+
+        .message-content {
+            flex-grow: 1;
         }
+
+        .message-content p {
+            margin-bottom: 12px;
+        }
+
+        .message-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .message-content ul, .message-content ol {
+            margin: 12px 0;
+            padding-left: 24px;
+            list-style-position: outside;
+        }
+
+        .message-content ul {
+            list-style-type: none;
+        }
+
+        .message-content ul li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .message-content ul li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .message-content ol {
+            counter-reset: item;
+            list-style-type: none;
+        }
+
+        .message-content ol li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 8px;
+            counter-increment: item;
+            line-height: 1.6;
+        }
+
+        .message-content ol li::before {
+            content: counter(item) ".";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .message-content h1, .message-content h2, .message-content h3, .message-content h4 {
+            margin: 24px 0 16px;
+            font-weight: 600;
+            color: var(--text-color);
+            line-height: 1.3;
+        }
+
+        .message-content h1 { 
+            font-size: 1.5em;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .message-content h2 { 
+            font-size: 1.3em;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 6px;
+        }
+
+        .message-content h3 { 
+            font-size: 1.1em;
+            color: var(--primary-color);
+        }
+
+        .message-content h4 {
+            font-size: 1em;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .message-content blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding: 12px 16px;
+            margin: 16px 0;
+            background-color: var(--assistant-bg);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .message-content p {
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .message-content strong {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .message-content em {
+            font-style: italic;
+            color: #4b5563;
+        }
+
+        .message-content code {
+            background-color: var(--assistant-bg);
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        .input-container {
+            padding: 20px 0;
+            border-top: 1px solid var(--border-color);
+            position: relative;
+            background-color: var(--bg-color);
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 12px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            transition: border-color 0.2s;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--primary-color);
+        }
+
+        textarea {
+            flex-grow: 1;
+            border: none;
+            resize: none;
+            padding: 8px;
+            font-family: inherit;
+            font-size: 16px;
+            line-height: 1.5;
+            color: var(--text-color);
+            background: transparent;
+            outline: none;
+            min-height: 24px;
+            max-height: 200px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .action-button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .action-button.secondary {
+            background-color: #4b5563;
+        }
+
+        .action-button.secondary:hover {
+            background-color: #374151;
+        }
+
         .loading {
             display: none;
-            text-align: center;
-            margin: 1rem 0;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-color);
+            font-size: 14px;
         }
-        .app-container {
-            max-width: 800px;
-            margin: 0 auto;
+
+        .loading.active {
+            display: flex;
         }
-        .app-header {
-            text-align: center;
-            padding: 1.5rem 0;
-            color: #343a40;
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
         }
-        .app-title {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
         }
-        .chat-input {
-            border-radius: 30px;
-            padding-left: 20px;
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .send-button {
-            border-radius: 30px;
+
+        @media (max-width: 640px) {
+            .chat-container {
+                padding: 12px;
+            }
+
+            .message {
+                padding: 12px;
+            }
+
+            .input-wrapper {
+                padding: 6px;
+            }
+
+            textarea {
+                font-size: 14px;
+            }
+
+            .action-button {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
         }
+
         .model-selector {
-            margin-bottom: 1rem;
-            text-align: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-color);
         }
+
+        .model-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .model-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            background: var(--bg-color);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .model-btn:hover {
+            background: var(--hover-color);
+        }
+
+        .model-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
         .model-badge {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             padding: 0.25rem 0.5rem;
             border-radius: 1rem;
-            background-color: #e9ecef;
-            color: #495057;
-            margin-left: 0.5rem;
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .model-btn.active .model-badge {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.3s ease-out, fadeOut 0.3s ease-out 1.7s;
+            z-index: 1000;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container app-container mt-4">
-        <div class="app-header">
-            <h1 class="app-title">İlaç Bilgi Asistanı</h1>
-            <p class="text-muted">Sağlık hakkında merak ettiğiniz konuları sorabilirsiniz</p>
-        </div>
-        
+    <div class="chat-container">
         <div class="model-selector">
-            <div class="btn-group" role="group">
-                <input type="radio" class="btn-check" name="modelSelect" id="model35" value="gpt-3.5-turbo" checked>
-                <label class="btn btn-outline-primary" for="model35">GPT-3.5 Turbo</label>
-                
-                <input type="radio" class="btn-check" name="modelSelect" id="model35ft" value="gpt-3.5-turbo-ft">
-                <label class="btn btn-outline-primary" for="model35ft">GPT-3.5 Turbo (Fine-tuned)</label>
-                
-                <input type="radio" class="btn-check" name="modelSelect" id="model4" value="gpt-4">
-                <label class="btn btn-outline-primary" for="model4">GPT-4</label>
+            <div class="model-buttons">
+                <button class="model-btn" data-model="gpt-3.5-turbo">
+                    <span class="model-name">3.5 Turbo</span>
+                    <span class="model-badge">Hızlı</span>
+                </button>
+                <button class="model-btn active" data-model="ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-007:Be8kXKjT">
+                    <span class="model-name">Empati Modeli v007</span>
+                    <span class="model-badge">Özel</span>
+                </button>
+                <button class="model-btn" data-model="ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-009:BegywYII">
+                    <span class="model-name">Empati Modeli v009</span>
+                    <span class="model-badge">Özel</span>
+                </button>
+                <button class="model-btn" data-model="gpt-4">
+                    <span class="model-name">4.0</span>
+                    <span class="model-badge">Gelişmiş</span>
+                </button>
             </div>
         </div>
-        
-        <div class="chat-container" id="chatContainer">
-            <div class="message assistant-message">
-                Merhaba! Ben sağlık ve ilaçlar konusunda size yardımcı olabilecek bir asistanım. 
-                Size nasıl yardımcı olabilirim?
+        <div class="chat-messages" id="chat-messages">
+            <div class="message assistant">
+                <div class="avatar">A</div>
+                <div class="message-content">
+                    <p>Merhaba! Ben sağlık ve ilaçlar konusunda size yardımcı olabilecek bir asistanım. Size nasıl yardımcı olabilirim?</p>
+                </div>
             </div>
         </div>
-
-        <div class="loading" id="loading">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Yükleniyor...</span>
+        <div class="input-container">
+            <div class="input-wrapper">
+                <textarea id="user-input" placeholder="Mesajınızı yazın..." rows="1"></textarea>
+                <div class="button-group">
+                    <button class="action-button" id="send-button">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Gönder</span>
+                    </button>
+                </div>
             </div>
-        </div>
-
-        <form id="chatForm" class="mb-3">
-            <div class="input-group">
-                <input type="text" id="userInput" class="form-control chat-input" 
-                       placeholder="Mesajınızı yazın..." required>
-                <button type="submit" class="btn btn-primary send-button">Gönder</button>
+            <div class="loading" id="loading">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <span>Yanıt yazılıyor...</span>
             </div>
-        </form>
-
-        <div class="disclaimer mt-3 text-center text-muted small">
-            <p>Bu asistan sadece genel bilgi amaçlıdır. Sağlıkla ilgili kararlarınızı vermeden önce mutlaka bir sağlık profesyoneline danışın.</p>
         </div>
     </div>
 
     <script>
-        let conversationHistory = [];
-        let currentDrug = null;
-        let isSearchingForDrug = false;
-        let sessionId = 'web-session-' + Date.now();  // Oturum için tekil ID
-        let currentModel = 'gpt-3.5-turbo';  // Varsayılan model
-        
-        // Model seçimi değiştiğinde
-        document.querySelectorAll('input[name="modelSelect"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                currentModel = this.value;
-                addMessage(`Model değiştirildi: ${this.value === 'gpt-4o' ? 'GPT-4o (Fine-tuned)' : 'GPT-3.5 Turbo'}`, false);
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+        const loading = document.getElementById('loading');
+        let activeModel = 'ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-007:Be8kXKjT';
+
+        // Model seçimi için event listener
+        document.querySelectorAll('.model-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Tüm butonlardan active sınıfını kaldır
+                document.querySelectorAll('.model-btn').forEach(btn => btn.classList.remove('active'));
+                
+                // Tıklanan butona active sınıfını ekle
+                this.classList.add('active');
+                
+                // Aktif modeli güncelle
+                activeModel = this.dataset.model;
+                
+                // Bildirim göster
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.textContent = `Model değiştirildi: ${this.querySelector('.model-name').textContent}`;
+                document.body.appendChild(notification);
+                
+                // 2 saniye sonra bildirimi kaldır
+                setTimeout(() => {
+                    notification.remove();
+                }, 2000);
             });
         });
-        
-        // İlaç adı listesini genişletelim
-        const commonDrugKeywords = [
-            'aspirin', 'paracetamol', 'ibuprofen', 'antibiyotik', 'enalapril',
-            'vitamin', 'ağrı kesici', 'ateş düşürücü', 'tansiyon', 'kolesterol',
-            'majezik', 'prozac', 'xanax', 'zoloft', 'insulin', 'metformin',
-            'deloday', 'deltacortril', 'dolorex', 'dikloron', 'deksametazon',
-            'dolven', 'arveles', 'nexium', 'augmentin', 'cipro', 'lipitor',
-            'coumadin', 'concor', 'nurofen', 'ventolin', 'minoset', 'apranax'
-        ];
-        
-        // Sağlık ile ilgili soru kelimeleri
-        const healthRelatedKeywords = [
-            'ilaç', 'tablet', 'kapsül', 'etken madde', 'doz', 'dozaj', 'yan etki',
-            'kullanım', 'tedavi', 'hastalık', 'semptom', 'reçete', 'eczane',
-            'mg', 'miligram', 'içerik', 'faydalı', 'zararlı', 'rahatsızlık'
-        ];
 
-        // İlaç adı olmayan yaygın ifadeler
-        const commonPhrases = [
-            'merhaba', 'selam', 'nasılsın', 'teşekkürler', 'sağol', 
-            'tamam', 'evet', 'hayır', 'olur', 'olmaz', 'belki',
-            'bilgi', 'arıyorum', 'hakkında', 'korkuyorum', 'endişe',
-            'yan etki', 'kullanıyorum', 'istiyorum', 'lütfen'
-        ];
+        // Textarea otomatik yükseklik ayarı
+        userInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
 
-        function addMessage(message, isUser = false) {
-            const chatContainer = document.getElementById('chatContainer');
+        // Enter tuşu ile gönderme
+        userInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Gönder butonuna tıklama
+        sendButton.addEventListener('click', sendMessage);
+
+        function formatMessage(text) {
+            // Markdown benzeri formatlamalar
+            text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            text = text.replace(/^# (.*$)/gm, '<h1>$1</h1>');
+            text = text.replace(/^## (.*$)/gm, '<h2>$1</h2>');
+            text = text.replace(/^### (.*$)/gm, '<h3>$1</h3>');
+            text = text.replace(/^#### (.*$)/gm, '<h4>$1</h4>');
+            text = text.replace(/^\> (.*$)/gm, '<blockquote>$1</blockquote>');
+            text = text.replace(/`(.*?)`/g, '<code>$1</code>');
+            
+            // Numaralı listeler
+            text = text.replace(/^\d+\. (.*$)/gm, function(match, content) {
+                return `<ol><li>${content}</li></ol>`;
+            });
+            
+            // Madde işaretli listeler
+            text = text.replace(/^\* (.*$)/gm, function(match, content) {
+                return `<ul><li>${content}</li></ul>`;
+            });
+            
+            // Alt maddeler için tire işareti
+            text = text.replace(/^- (.*$)/gm, function(match, content) {
+                return `<ul><li>${content}</li></ul>`;
+            });
+            
+            // Paragraflar
+            text = text.replace(/\n\n/g, '</p><p>');
+            
+            // Listeleri düzelt
+            text = text.replace(/<\/ol><ol>/g, '');
+            text = text.replace(/<\/ul><ul>/g, '');
+            
+            return `<p>${text}</p>`;
+        }
+
+        function addMessage(content, isUser = false) {
             const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${isUser ? 'user-message' : 'assistant-message'}`;
+            messageDiv.className = `message ${isUser ? 'user' : 'assistant'}`;
             
-            const formattedMessage = message.replace(/\n/g, '<br>');
-            messageDiv.innerHTML = formattedMessage;
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar';
+            avatar.textContent = isUser ? 'U' : 'A';
             
-            chatContainer.appendChild(messageDiv);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message-content';
+            messageContent.innerHTML = formatMessage(content);
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(messageContent);
+            chatMessages.appendChild(messageDiv);
+            
+            // Otomatik kaydırma
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
-        
-        // Gelen mesajın ilaçla ilgili olup olmadığını kontrol et
-        function isDrugRelated(message) {
-            const lowerMessage = message.toLowerCase();
+
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            addMessage(message, true);
+            userInput.value = '';
+            userInput.style.height = 'auto';
             
-            // Yaygın ilaç adlarını kontrol et
-            for (const drug of commonDrugKeywords) {
-                if (lowerMessage.includes(drug)) {
-                    return true;
-                }
-            }
-            
-            // Sağlık ile ilgili kelimeleri kontrol et
-            let healthTermCount = 0;
-            for (const keyword of healthRelatedKeywords) {
-                if (lowerMessage.includes(keyword)) {
-                    healthTermCount++;
-                }
-            }
-            
-            // En az iki sağlık terimi içeriyorsa ilgili kabul et
-            return healthTermCount >= 2;
-        }
-        
-        // Daha iyi ilaç adı tanıma
-        function extractPotentialDrugName(message) {
-            const lowerMessage = message.toLowerCase();
-            const words = message.split(' ');
-            
-            // Eğer mesaj çok uzunsa muhtemelen ilaç adı değildir
-            if (words.length > 5) {
-                return null;
-            }
-            
-            // Bilinen ilaç adları içinde arama yap
-            for (const drug of commonDrugKeywords) {
-                if (lowerMessage.includes(drug)) {
-                    return drug;
-                }
-            }
-            
-            // "ilacı", "hakkında" gibi belirteçler ile arama
-            const indicators = ['ilacı', 'hakkında', 'adlı', 'isimli', 'ilacını', 'ilacın', 'tablet', 'kapsül'];
-            for (let i = 1; i < words.length; i++) {
-                const lowerWord = words[i].toLowerCase();
-                if (indicators.includes(lowerWord)) {
-                    // Önceki kelime yaygın bir ifade değilse
-                    const prevWord = words[i-1].toLowerCase();
-                    if (!commonPhrases.includes(prevWord)) {
-                        return words[i-1];
-                    }
-                }
-            }
-            
-            // "İlacın adı X" veya "X ilacı" formatını kontrol et
-            if (lowerMessage.includes('ilacın adı') || lowerMessage.includes('ilaç adı')) {
-                const parts = lowerMessage.split('adı');
-                if (parts.length > 1) {
-                    const potentialDrug = parts[1].trim().split(' ')[0];
-                    if (!commonPhrases.includes(potentialDrug)) {
-                        return potentialDrug;
-                    }
-                }
-            }
-            
-            // Tek kelimelik mesajı kontrol et
-            if (words.length === 1 && !commonPhrases.includes(lowerMessage)) {
-                return message;
-            }
-            
-            return null;
-        }
-        
-        // Genel sohbet için
-        async function generalChat(message) {
-            const loading = document.getElementById('loading');
-            loading.style.display = 'block';
-            
+            sendButton.disabled = true;
+            loading.classList.add('active');
+
             try {
-                // API'ye istek gönder
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: {
@@ -261,132 +586,26 @@
                     },
                     body: JSON.stringify({
                         message: message,
-                        session_id: sessionId,
-                        conversation_history: conversationHistory,
-                        model: currentModel
+                        model: activeModel,
+                        session_id: 'default'
                     })
                 });
 
                 const data = await response.json();
                 
                 if (data.error) {
-                    addMessage('Üzgünüm, bir hata oluştu: ' + data.error, false);
-                    return;
+                    addMessage('Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.');
+                } else {
+                    addMessage(data.response);
                 }
-
-                addMessage(data.response, false);
-                conversationHistory = data.conversation_history;
-                
-                // Model bilgisini göster
-                const modelBadge = document.createElement('span');
-                modelBadge.className = 'model-badge';
-                modelBadge.textContent = data.model_used === 'gpt-4o' ? 'GPT-4o' : 'GPT-3.5';
-                document.querySelector('.message:last-child').appendChild(modelBadge);
-                
-            } catch (error) {
-                console.error('Hata:', error);
-                addMessage('Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.', false);
-            } finally {
-                loading.style.display = 'none';
-            }
-        }
-
-        async function handleConversation(message) {
-            addMessage(message, true);
-            
-            // Mesajın ilaçla ilgili olup olmadığını kontrol et
-            const drugRelated = isDrugRelated(message);
-            
-            // Mevcut konuşma ilaç hakkındaysa ve bu bir takip sorusu gibi görünüyorsa
-            if (currentDrug && message.toLowerCase().includes(currentDrug.toLowerCase())) {
-                await getIlacInfo(currentDrug, message);
-                return;
-            }
-            
-            if (drugRelated) {
-                // İlaç adı henüz belirlenmemişse
-                if (!currentDrug) {
-                    const potentialDrug = extractPotentialDrugName(message);
-                    
-                    if (potentialDrug) {
-                        currentDrug = potentialDrug;
-                        await getIlacInfo(currentDrug, message);
-                        return;
-                    }
-                }
-            } 
-            
-            // İlaçla ilgili değilse veya ilaç adı belirtilmemişse genel sohbete devam et
-            await generalChat(message);
-        }
-        
-        async function getIlacInfo(drugName, question) {
-            const loading = document.getElementById('loading');
-            loading.style.display = 'block';
-            
-            try {
-                // API'ye istek gönder
-                const response = await fetch('/api/drug-info', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        drug_name_en: drugName,
-                        question_tr: question,
-                        session_id: sessionId,
-                        conversation_history: conversationHistory,
-                        model: currentModel
-                    })
-                });
-
-                const data = await response.json();
-                
-                // Asistan cevabını ekle
-                let answer = "Üzgünüm, bu konuda bilgi bulamadım.";
-                if (data.fda_response) {
-                    answer = data.fda_response;
-                } else if (data.web_response) {
-                    answer = data.web_response;
-                }
-                
-                addMessage(answer);
-                
-                // Konuşma geçmişini güncelle
-                conversationHistory.push({
-                    role: "user",
-                    content: question
-                });
-                
-                conversationHistory.push({
-                    role: "assistant",
-                    content: answer
-                });
-                
-                // Sunucudan gelen güncel konuşma geçmişini kullan
-                if (data.conversation_history && data.conversation_history.length > 0) {
-                    // Sadece sunucudaki kayıtları ekleyeceğiz
-                }
-                
             } catch (error) {
                 console.error('Error:', error);
-                addMessage("Bir hata oluştu. Lütfen tekrar deneyin.");
+                addMessage('Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.');
             } finally {
-                loading.style.display = 'none';
+                sendButton.disabled = false;
+                loading.classList.remove('active');
             }
         }
-
-        // Form gönderimi
-        document.getElementById('chatForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const input = document.getElementById('userInput');
-            const message = input.value.trim();
-            
-            if (message) {
-                await handleConversation(message);
-                input.value = '';
-            }
-        });
     </script>
 </body>
 </html> 

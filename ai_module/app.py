@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 import os
 from Ilac import Drug
-from ai import AIAssistant
+from ai import AIAssistant # ai.py'den sınıfımızı import ediyoruz
 from google_research.google_search import GoogleSearch
 from typing import Dict, Optional, List
 from datetime import datetime, timedelta
@@ -88,113 +88,58 @@ def add_to_conversation_history(session_id: str, drug_name: str, question: str, 
         'response': response
     })
 
+# Uygulamanın en başında, global alanda bir AIAssistant nesnesi oluşturalım.
+# Bu, her istekte yeniden oluşturmak yerine tek bir nesne kullanmamızı sağlar.
+assistant = AIAssistant()
+
 def generate_natural_response(drug_name: str, raw_response: str, conversation_history: List[Dict], question: str, model_name: str = "gpt-3.5-turbo") -> str:
     """
-    FDA veya Google'dan gelen ham yanıtı alıp daha doğal, sohbet tarzında bir yanıt oluşturur.
+    AIAssistant sınıfını kullanarak FDA veya Google'dan gelen ham yanıtı alıp daha doğal, sohbet tarzında bir yanıt oluşturur.
     """
-    api_key: str = get_openai_api_key()
-    client = OpenAI(api_key=api_key)
-    
-    # Model seçimi
-    if model_name == "gpt-4":
-        model = "gpt-4"
-    elif model_name == "gpt-3.5-turbo-ft":
-        model = os.getenv("FINE_TUNED_MODEL", "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-006:BdOcBDoD")
-    else:
-        model = model_name
-    
-    # Konuşma geçmişini OpenAI formatına dönüştür
-    messages = [
-        {"role": "system", "content": f"""
-        Sen ilaçlar hakkında bilgi veren, samimi ve yardımsever bir sağlık asistanısın.
-        Kullanıcının sorduğu sorulara aşağıdaki bilgilere dayanarak cevap vereceksin.
-        Cevaplarında resmi tıbbi dil yerine, daha samimi ve anlaşılır bir dil kullan.
-        İlaç bilgilerini sunarken fazla teknik terimleri açıkla ve kullanıcının endişelerini dinle.
-        Bilgi kaynağının FDA veya web aramaları olduğunu belirtmene gerek yok.
-        Cevaplarında kısa ve öz ol, ancak önemli bilgileri atlamadan ve samimi bir dilde yanıtla.
+    # Model adını, gelen isteğe göre güncelleyebiliriz eğer gerekirse.
+    assistant.model_name = model_name if model_name != "gpt-3.5-turbo-ft" else "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-009:BegywYII"
+
+    # Konuşma geçmişini ve ham yanıtı birleştirerek kullanıcı mesajını oluştur
+    # Bu kısım, generate_natural_response'un özel mantığına göre düzenlenmeli.
+    # Şimdilik, sadece soruyu ve ham yanıtı birleştirelim.
+    # Daha sofistike bir birleştirme stratejisi gerekebilir.
+    user_input_for_assistant = f"Kullanıcının sorusu: {question}\n\nİlgili bilgiler: {raw_response}"
+
+    try:
+        # Konuşma geçmişini OpenAI formatına uygun hale getirelim
+        formatted_history = []
+        for msg in conversation_history:
+            if msg.get("role") and msg.get("content"):
+                formatted_history.append({"role": msg["role"], "content": msg["content"]})
         
-        Doktor yönlendirmesi yaparken:
-        - Her yanıtın sonunda otomatik olarak doktora yönlendirme yapma
-        - Sadece gerçekten ciddi durumlarda (acil, hayati risk, şiddetli yan etki gibi) doktora yönlendir
-        - Yönlendirme yaparken doğal bir sohbet akışı içinde yap, "doktorunuza danışın" gibi resmi ifadeler kullanma
-        - Kullanıcının endişelerini önce dinle ve anla, sonra gerekirse yönlendirme yap
-        
-        Şu anda kullanıcı seninle {drug_name} ilacı hakkında konuşuyor.
-        """}
-    ]
-    
-    # Konuşma geçmişini ekle
-    for entry in conversation_history:
-        if 'role' in entry and 'content' in entry:
-            messages.append({"role": entry['role'], "content": entry['content']})
-    
-    # Kullanıcının mevcut sorusunu ekle
-    messages.append({"role": "user", "content": question})
-    
-    # Ham yanıtı ekle
-    messages.append({"role": "system", "content": f"Aşağıdaki ham bilgiler mevcut soru için bulundu, bunu kullanıcıya samimi şekilde ilet: {raw_response}"})
-    
-    response = client.chat.completions.create(
-        model=model,
-        messages=messages,
-        max_tokens=3000,
-        temperature=0.7,
-    )
-    
-    return response.choices[0].message.content
+        # Artık tüm zekayı ve prompt'u içeren o tek metodu çağırıyoruz.
+        return assistant.get_response(user_input_for_assistant, formatted_history)
+
+    except Exception as e:
+        print(f"Hata (generate_natural_response): {e}")
+        return "Üzgünüm, bir hata oluştu."
 
 def simple_chat_response(message: str, conversation_history: List[Dict], model_name: str = "gpt-3.5-turbo") -> str:
     """
-    İlaç araması yapmadan basit sohbet yanıtları üretir.
+    AIAssistant sınıfını kullanarak genel sohbet yanıtları üretir.
     """
-    api_key: str = get_openai_api_key()
-    client = OpenAI(api_key=api_key)
+    # Her çağrıda yeni bir nesne oluşturmak yerine, global nesneyi kullanalım.
+    # Model adını, gelen isteğe göre güncelleyebiliriz eğer gerekirse.
+    assistant.model_name = model_name if model_name != "gpt-3.5-turbo-ft" else "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-009:BegywYII"
     
-    # Model seçimi
-    if model_name == "gpt-4":
-        model = "gpt-4"
-    elif model_name == "gpt-3.5-turbo-ft":
-        model = os.getenv("FINE_TUNED_MODEL", "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-006:BdOcBDoD")
-    else:
-        model = model_name
-    
-    messages = [
-        {"role": "system", "content": """
-        Sen samimi ve yardımsever bir sağlık asistanısın. Sağlık ve ilaçlar konusunda genel bilgiler verebilirsin,
-        ancak spesifik ilaç tavsiyeleri yapmamalısın. Kullanıcıyla doğal bir sohbet akışı içinde
-        konuşmalısın.
-        
-        Eğer kullanıcı sadece bir ilaç adı yazarsa:
-        - İlaç hakkında genel bir bilgi ver
-        - İlacı internetten araştırmak isteyip istemediğini sor
-        - Örnek: "Bu ilaç hakkında daha detaylı bilgi almak ister misiniz? İnternetten araştırabilirim."
-        
-        Yanıtlarını kısa ve anlaşılır tut, tıbbi terimleri kullanmaktan kaçın.
-        
-        Doktor yönlendirmesi yaparken:
-        - Her yanıtın sonunda otomatik olarak doktora yönlendirme yapma
-        - Sadece gerçekten ciddi durumlarda (acil, hayati risk, şiddetli yan etki gibi) doktora yönlendir
-        - Yönlendirme yaparken doğal bir sohbet akışı içinde yap, "doktorunuza danışın" gibi resmi ifadeler kullanma
-        - Kullanıcının endişelerini önce dinle ve anla, sonra gerekirse yönlendirme yap
-        """}
-    ]
-    
-    # Konuşma geçmişini ekle
-    for entry in conversation_history:
-        if 'role' in entry and 'content' in entry:
-            messages.append({"role": entry['role'], "content": entry['content']})
-    
-    # Kullanıcının mevcut mesajını ekle
-    messages.append({"role": "user", "content": message})
-    
-    response = client.chat.completions.create(
-        model=model,
-        messages=messages,
-        max_tokens=3000,
-        temperature=0.7,
-    )
-    
-    return response.choices[0].message.content
+    try:
+        # Konuşma geçmişini OpenAI formatına uygun hale getirelim
+        formatted_history = []
+        for msg in conversation_history:
+            if msg.get("role") and msg.get("content"):
+                formatted_history.append({"role": msg["role"], "content": msg["content"]})
+
+        # Artık tüm zekayı ve prompt'u içeren o tek metodu çağırıyoruz.
+        return assistant.get_response(message, formatted_history)
+
+    except Exception as e:
+        print(f"Hata (simple_chat_response): {e}")
+        return "Üzgünüm, bir hata oluştu."
 
 @app.route('/')
 def index():
@@ -229,7 +174,7 @@ def chat():
         message = data['message']
         session_id = data.get('session_id', 'default')
         client_conversation_history = data.get('conversation_history', [])
-        model_name = data.get('model', 'gpt-3.5-turbo')  # Varsayılan model
+        model_name = data.get('model', "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-009:BegywYII")  # Default to new correct FT model
         
         # Konuşma geçmişini al
         server_conversation_history = get_conversation_history(session_id)
@@ -237,7 +182,11 @@ def chat():
         # Konuşma geçmişini birleştir (client varsa onu öncelikle kullan)
         conversation_history = client_conversation_history if client_conversation_history else server_conversation_history
         
-        # Basit sohbet yanıtı oluştur
+        # Ensure the correct model is used, overriding if necessary
+        if model_name not in ["gpt-4", "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-009:BegywYII"]:
+            # If an unrecognized model is passed or the old FT model, default to the new correct one
+            model_name = "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-009:BegywYII"
+
         chat_response = simple_chat_response(message, conversation_history, model_name)
         
         # Konuşma geçmişini güncelle
@@ -294,7 +243,7 @@ def get_drug_info():
         question_tr = data['question_tr'].strip()
         session_id = data.get('session_id', 'default')
         client_conversation_history = data.get('conversation_history', [])
-        model_name = data.get('model', 'gpt-3.5-turbo')  # Varsayılan model
+        model_name = data.get('model', "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-009:BegywYII")  # Default to new correct FT model
 
         # İlaç adı kontrolü
         if not drug_name_en:
@@ -412,9 +361,12 @@ def ask_question():
             }), 400
 
         question = data['question']
-        model_name = data.get('model', 'gpt-3.5-turbo')  # Varsayılan model
+        model_name = data.get('model', "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-009:BegywYII") # Default to new correct FT model
+        
+        # Ensure the correct model is used
+        if model_name not in ["gpt-4", "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-009:BegywYII"]:
+            model_name = "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-009:BegywYII"
 
-        # Basit sohbet yanıtı oluştur
         chat_response = simple_chat_response(question, [], model_name)
         
         return jsonify({
@@ -426,4 +378,4 @@ def ask_question():
         return jsonify({'error': f"Bilinmeyen bir hata oluştu: {str(e)}"}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True) 
+    app.run(host='0.0.0.0', port=5000, debug=True)

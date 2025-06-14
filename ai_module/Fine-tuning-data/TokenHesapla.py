@@ -14,11 +14,13 @@ def count_tokens(text: str) -> int:
     return len(encoding.encode(text))
 
 def main():
-    # Dosya yolu
-    file_path = "Fine-tuning-data/Endise/Data_2.jsonl"
+    # Betiğin bulunduğu dizini al
+    script_directory = os.path.dirname(os.path.abspath(__file__))
+    # d7.jsonl dosyasının betiğe göre doğru yolunu oluştur
+    file_path = os.path.join(script_directory, "Cevap_Yapilandirma", "d7.jsonl")
     
     # Model adını .env'den al
-    model_name = os.getenv("FINE_TUNED_MODEL", "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-006:BdOcBDoD")
+    model_name = "ft:gpt-3.5-turbo-1106:personal:bioworks-gpt3-empati-009:Be8kXKjT"
     
     # Dosyanın varlığını kontrol et
     if not os.path.exists(file_path):
