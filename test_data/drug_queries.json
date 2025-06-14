@@ -1,0 +1,69 @@
+{
+    "test_cases": [
+        {
+            "id": "DRUG_001",
+            "description": "Temel ilaç bilgisi sorgusu",
+            "input": "Gripin ilacı nedir?",
+            "expected_emotions": ["belirsizlik"],
+            "expected_intensity": 1,
+            "expected_drug_name": "gripin",
+            "expected_response_contains": [
+                "gripin",
+                "tedavi",
+                "kullanım"
+            ]
+        },
+        {
+            "id": "DRUG_002",
+            "description": "İlaç yan etkileri sorgusu",
+            "input": "Gripin ilacının yan etkileri nelerdir?",
+            "expected_emotions": ["endişe"],
+            "expected_intensity": 2,
+            "expected_drug_name": "gripin",
+            "expected_response_contains": [
+                "yan etki",
+                "doktor",
+                "danışma"
+            ]
+        },
+        {
+            "id": "DRUG_003",
+            "description": "İlaç dozu sorgusu",
+            "input": "Gripin 500mg doz fazla mı?",
+            "expected_emotions": ["endişe", "belirsizlik"],
+            "expected_intensity": 2,
+            "expected_drug_name": "gripin",
+            "expected_response_contains": [
+                "doz",
+                "doktor",
+                "öneri"
+            ]
+        },
+        {
+            "id": "DRUG_004",
+            "description": "İlaç kullanım süresi sorgusu",
+            "input": "Gripin ilacını ne kadar süre kullanmalıyım?",
+            "expected_emotions": ["belirsizlik"],
+            "expected_intensity": 1,
+            "expected_drug_name": "gripin",
+            "expected_response_contains": [
+                "doktor",
+                "tedavi",
+                "süre"
+            ]
+        },
+        {
+            "id": "DRUG_005",
+            "description": "İlaç etkileşimi sorgusu",
+            "input": "Gripin başka ilaçlarla etkileşime girer mi?",
+            "expected_emotions": ["endişe"],
+            "expected_intensity": 2,
+            "expected_drug_name": "gripin",
+            "expected_response_contains": [
+                "etkileşim",
+                "doktor",
+                "danışma"
+            ]
+        }
+    ]
+} 

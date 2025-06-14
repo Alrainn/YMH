@@ -1,0 +1,68 @@
+{
+    "test_cases": [
+        {
+            "id": "EMO_001",
+            "description": "Temel endişe ifadesi",
+            "input": "İlacın yan etkilerinden endişeliyim",
+            "expected_emotions": ["endişe"],
+            "expected_intensity": 1,
+            "expected_response_contains": [
+                "endişe",
+                "anlıyorum",
+                "yardımcı"
+            ]
+        },
+        {
+            "id": "EMO_002",
+            "description": "Yoğun endişe ifadesi",
+            "input": "İlacın yan etkilerinden çok endişeliyim ve korkuyorum!!!",
+            "expected_emotions": ["endişe", "korku"],
+            "expected_intensity": 3,
+            "expected_response_contains": [
+                "endişe",
+                "korku",
+                "destek",
+                "güven"
+            ]
+        },
+        {
+            "id": "EMO_003",
+            "description": "İlaç kaynaklı endişe",
+            "input": "İlacın yan etkilerinden tedirginim ve güvensiz hissediyorum",
+            "expected_emotions": ["endişe"],
+            "expected_intensity": 2,
+            "expected_response_contains": [
+                "yan etki",
+                "tedirgin",
+                "anlıyorum",
+                "destek"
+            ]
+        },
+        {
+            "id": "EMO_004",
+            "description": "Belirsizlik ifadesi",
+            "input": "İlacı kullanmaya devam etmeli miyim, emin değilim",
+            "expected_emotions": ["belirsizlik", "endişe"],
+            "expected_intensity": 2,
+            "expected_response_contains": [
+                "anlıyorum",
+                "yardım",
+                "destek",
+                "yönlendirme"
+            ]
+        },
+        {
+            "id": "EMO_005",
+            "description": "Olumlu duygu ifadesi",
+            "input": "İlaç işe yaradı, kendimi daha iyi ve güçlü hissediyorum",
+            "expected_emotions": ["moral", "umut"],
+            "expected_intensity": 2,
+            "expected_response_contains": [
+                "sevindim",
+                "iyi",
+                "devam",
+                "destek"
+            ]
+        }
+    ]
+} 

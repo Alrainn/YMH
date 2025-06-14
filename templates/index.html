@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İlaç Bilgi Asistanı</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .chat-container {
+            height: 500px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 1.25rem;
+            max-width: 90%;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+        .user-message {
+            background-color: #007bff;
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 0.25rem;
+        }
+        .assistant-message {
+            background-color: #f1f3f5;
+            margin-right: auto;
+            border-bottom-left-radius: 0.25rem;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 1rem 0;
+        }
+        .app-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .app-header {
+            text-align: center;
+            padding: 1.5rem 0;
+            color: #343a40;
+        }
+        .app-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .chat-input {
+            border-radius: 30px;
+            padding-left: 20px;
+        }
+        .send-button {
+            border-radius: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container app-container mt-4">
+        <div class="app-header">
+            <h1 class="app-title">İlaç Bilgi Asistanı</h1>
+            <p class="text-muted">Sağlık hakkında merak ettiğiniz konuları sorabilirsiniz</p>
+        </div>
+        
+        <div class="chat-container" id="chatContainer">
+            <div class="message assistant-message">
+                Merhaba! Ben sağlık ve ilaçlar konusunda size yardımcı olabilecek bir asistanım. 
+                Size nasıl yardımcı olabilirim?
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Yükleniyor...</span>
+            </div>
+        </div>
+
+        <form id="chatForm" class="mb-3">
+            <div class="input-group">
+                <input type="text" id="userInput" class="form-control chat-input" 
+                       placeholder="Mesajınızı yazın..." required>
+                <button type="submit" class="btn btn-primary send-button">Gönder</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let conversationHistory = [];
+        let currentDrug = null;
+        let isSearchingForDrug = false;
+        let sessionId = 'web-session-' + Date.now();  // Oturum için tekil ID
+        
+        // İlaç adı listesini genişletelim
+        const commonDrugKeywords = [
+            'aspirin', 'paracetamol', 'ibuprofen', 'antibiyotik', 'enalapril',
+            'vitamin', 'ağrı kesici', 'ateş düşürücü', 'tansiyon', 'kolesterol',
+            'majezik', 'prozac', 'xanax', 'zoloft', 'insulin', 'metformin',
+            'deloday', 'deltacortril', 'dolorex', 'dikloron', 'deksametazon',
+            'dolven', 'arveles', 'nexium', 'augmentin', 'cipro', 'lipitor',
+            'coumadin', 'concor', 'nurofen', 'ventolin', 'minoset', 'apranax'
+        ];
+        
+        // Sağlık ile ilgili soru kelimeleri
+        const healthRelatedKeywords = [
+            'ilaç', 'tablet', 'kapsül', 'etken madde', 'doz', 'dozaj', 'yan etki',
+            'kullanım', 'tedavi', 'hastalık', 'semptom', 'reçete', 'eczane',
+            'mg', 'miligram', 'içerik', 'faydalı', 'zararlı', 'rahatsızlık'
+        ];
+
+        // İlaç adı olmayan yaygın ifadeler
+        const commonPhrases = [
+            'merhaba', 'selam', 'nasılsın', 'teşekkürler', 'sağol', 
+            'tamam', 'evet', 'hayır', 'olur', 'olmaz', 'belki',
+            'bilgi', 'arıyorum', 'hakkında', 'korkuyorum', 'endişe',
+            'yan etki', 'kullanıyorum', 'istiyorum', 'lütfen'
+        ];
+
+        function addMessage(message, isUser = false) {
+            const chatContainer = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'assistant-message'}`;
+            
+            const formattedMessage = message.replace(/\n/g, '<br>');
+            messageDiv.innerHTML = formattedMessage;
+            
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        // Gelen mesajın ilaçla ilgili olup olmadığını kontrol et
+        function isDrugRelated(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            // Önceki ilaç sorgusu varsa ve ilaç adı ile ilgili anahtar kelimeler içeriyorsa
+            if (currentDrug) {
+                const drugTerms = [
+                    'ne için', 'nedir', 'yan etki', 'kullanılır', 'nasıl', 'doz', 'dozaj',
+                    'etken', 'madde', 'tehlikeli', 'bebek', 'hamile', 'çocuk', 'kullanan',
+                    'kullanım', 'uyarı', 'dikkat'
+                ];
+                
+                for (const term of drugTerms) {
+                    if (lowerMessage.includes(term)) {
+                        return true;
+                    }
+                }
+            }
+            
+            // Yaygın ilaç adlarını kontrol et
+            for (const drug of commonDrugKeywords) {
+                if (lowerMessage.includes(drug)) {
+                    return true;
+                }
+            }
+            
+            // Sağlık ile ilgili kelimeleri kontrol et
+            let healthTermCount = 0;
+            for (const keyword of healthRelatedKeywords) {
+                if (lowerMessage.includes(keyword)) {
+                    healthTermCount++;
+                }
+            }
+            
+            // En az iki sağlık terimi içeriyorsa ilgili kabul et
+            return healthTermCount >= 2;
+        }
+        
+        // Daha iyi ilaç adı tanıma
+        function extractPotentialDrugName(message) {
+            const lowerMessage = message.toLowerCase();
+            const words = message.split(' ');
+            
+            // Eğer mesaj çok uzunsa muhtemelen ilaç adı değildir
+            if (words.length > 5) {
+                return null;
+            }
+            
+            // Bilinen ilaç adları içinde arama yap
+            for (const drug of commonDrugKeywords) {
+                if (lowerMessage.includes(drug)) {
+                    return drug;
+                }
+            }
+            
+            // "ilacı", "hakkında" gibi belirteçler ile arama
+            const indicators = ['ilacı', 'hakkında', 'adlı', 'isimli', 'ilacını', 'ilacın', 'tablet', 'kapsül'];
+            for (let i = 1; i < words.length; i++) {
+                const lowerWord = words[i].toLowerCase();
+                if (indicators.includes(lowerWord)) {
+                    // Önceki kelime yaygın bir ifade değilse
+                    const prevWord = words[i-1].toLowerCase();
+                    if (!commonPhrases.includes(prevWord)) {
+                        return words[i-1];
+                    }
+                }
+            }
+            
+            // "İlacın adı X" veya "X ilacı" formatını kontrol et
+            if (lowerMessage.includes('ilacın adı') || lowerMessage.includes('ilaç adı')) {
+                const parts = lowerMessage.split('adı');
+                if (parts.length > 1) {
+                    const potentialDrug = parts[1].trim().split(' ')[0];
+                    if (!commonPhrases.includes(potentialDrug)) {
+                        return potentialDrug;
+                    }
+                }
+            }
+            
+            // Tek kelimelik mesajı kontrol et
+            if (words.length === 1 && !commonPhrases.includes(lowerMessage)) {
+                return message;
+            }
+            
+            return null;
+        }
+        
+        // Genel sohbet için
+        async function generalChat(message) {
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            
+            try {
+                // API'ye istek gönder
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        session_id: sessionId,
+                        conversation_history: conversationHistory
+                    })
+                });
+
+                const data = await response.json();
+                
+                addMessage(data.response);
+                
+                // Konuşma geçmişini güncelle
+                conversationHistory.push({
+                    role: "user",
+                    content: message
+                });
+                
+                conversationHistory.push({
+                    role: "assistant",
+                    content: data.response
+                });
+                
+            } catch (error) {
+                console.error('Error:', error);
+                addMessage("Bir hata oluştu. Lütfen tekrar deneyin.");
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        async function handleConversation(message) {
+            addMessage(message, true);
+            
+            // Mesajın ilaçla ilgili olup olmadığını kontrol et
+            const drugRelated = isDrugRelated(message);
+            
+            // Mevcut konuşma ilaç hakkındaysa ve bu bir takip sorusu gibi görünüyorsa
+            if (currentDrug && message.toLowerCase().includes(currentDrug.toLowerCase())) {
+                await getIlacInfo(currentDrug, message);
+                return;
+            }
+            
+            if (drugRelated) {
+                // İlaç adı henüz belirlenmemişse
+                if (!currentDrug && !isSearchingForDrug) {
+                    const potentialDrug = extractPotentialDrugName(message);
+                    
+                    if (potentialDrug) {
+                        currentDrug = potentialDrug;
+                        addMessage(`Endişelerinizi anlıyorum. ${currentDrug} hakkında size yardımcı olmak için bilgi araştırıyorum...`);
+                        await getIlacInfo(currentDrug, "ne için kullanılır");
+                        return;
+                    } else {
+                        isSearchingForDrug = true;
+                        const lowerMessage = message.toLowerCase();
+                        let response = "";
+                        
+                        // Duruma göre özelleştirilmiş yanıtlar
+                        if (lowerMessage.includes("endişe") || lowerMessage.includes("korku") || lowerMessage.includes("yan etki")) {
+                            response = "Endişelerinizi anlıyorum. Size daha iyi yardımcı olabilmem için, bahsettiğiniz ilacın adını paylaşır mısınız?";
+                        } else if (lowerMessage.includes("ağrı") || lowerMessage.includes("acı")) {
+                            response = "Yaşadığınız rahatsızlığı anlıyorum. Size doğru bilgileri verebilmem için, kullandığınız ilacın adını öğrenebilir miyim?";
+                        } else if (lowerMessage.includes("moral") || lowerMessage.includes("destek")) {
+                            response = "Size destek olmak istiyorum. Hangi ilaç hakkında bilgi almak istediğinizi benimle paylaşır mısınız?";
+                        } else {
+                            response = "Size yardımcı olmak için ilacın adını öğrenmem gerekiyor. Hangi ilaç hakkında bilgi almak istiyorsunuz?";
+                        }
+                        
+                        addMessage(response);
+                        return;
+                    }
+                } 
+                // İlaç adı sormuşsak ve cevap geldiyse
+                else if (isSearchingForDrug) {
+                    const potentialDrug = extractPotentialDrugName(message);
+                    if (potentialDrug) {
+                        currentDrug = potentialDrug;
+                        isSearchingForDrug = false;
+                        addMessage(`${currentDrug} hakkında size yardımcı olmak için bilgi araştırıyorum. Özellikle merak ettiğiniz bir konu var mı?`);
+                        await getIlacInfo(currentDrug, "ne için kullanılır");
+                    } else {
+                        addMessage("Üzgünüm, tam olarak hangi ilaçtan bahsettiğinizi anlayamadım. İlacın adını tekrar yazabilir misiniz?");
+                    }
+                    return;
+                }
+            } 
+            
+            // İlaçla ilgili değilse veya ilaç adı belirtilmemişse genel sohbete devam et
+            await generalChat(message);
+        }
+        
+        async function getIlacInfo(drugName, question) {
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            
+            try {
+                // API'ye istek gönder
+                const response = await fetch('/api/drug-info', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        drug_name_en: drugName,
+                        question_tr: question,
+                        session_id: sessionId,
+                        conversation_history: conversationHistory
+                    })
+                });
+
+                const data = await response.json();
+                
+                // Asistan cevabını ekle
+                let answer = "Üzgünüm, bu konuda bilgi bulamadım.";
+                if (data.fda_response) {
+                    answer = data.fda_response;
+                } else if (data.web_response) {
+                    answer = data.web_response;
+                }
+                
+                addMessage(answer);
+                
+                // Konuşma geçmişini güncelle
+                conversationHistory.push({
+                    role: "user",
+                    content: question
+                });
+                
+                conversationHistory.push({
+                    role: "assistant",
+                    content: answer
+                });
+                
+                // Sunucudan gelen güncel konuşma geçmişini kullan
+                if (data.conversation_history && data.conversation_history.length > 0) {
+                    // Sadece sunucudaki kayıtları ekleyeceğiz
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                addMessage("Bir hata oluştu. Lütfen tekrar deneyin.");
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Form gönderimi
+        document.getElementById('chatForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                await handleConversation(message);
+                input.value = '';
+            }
+        });
+    </script>
+</body>
+</html> 
