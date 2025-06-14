@@ -1,0 +1,185 @@
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.team-member {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+.team-member:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(76, 175, 80, 0.15);
+    border-color: rgba(76, 175, 80, 0.4);
+}
+
+.team-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 3px solid #4CAF50;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+}
+
+.team-member h3 {
+    color: #fff;
+    font-size: 1.4rem;
+    margin: 0.5rem 0;
+    font-weight: 600;
+}
+
+.team-role {
+    color: #4CAF50;
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+    font-weight: 500;
+}
+
+.team-description {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-top: 1rem;
+}
+
+.section-title {
+    color: #fff;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.vision-text {
+    color: #fff;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.profile-block {
+    margin-bottom: 2.5rem;
+}
+
+.team-social {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.social-icon {
+    color: #4CAF50;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4em;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+    text-decoration: none;
+}
+.social-icon:hover {
+    background: #4CAF50;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .team-member {
+        padding: 1rem;
+    }
+
+    .team-photo {
+        width: 120px;
+        height: 120px;
+    }
+}
+/* Mobil Uyumluluk */
+@media screen and (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+
+    .left-panel {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding-bottom: 20px;
+        margin-bottom: 60px;
+    }
+
+    .main-area {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .top-panel {
+        left: 0;
+        padding: 10px 0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+    }
+
+    .nav-container {
+        padding: 0 15px;
+    }
+
+    .nav-right {
+        width: 100%;
+        justify-content: space-between;
+        padding: 8px 15px;
+        background: transparent;
+    }
+
+    .nav-link {
+        padding: 6px 12px;
+        min-width: auto;
+        font-size: 14px;
+    }
+
+    .nav-link i {
+        font-size: 14px;
+    }
+
+    .content-area {
+        padding: 20px 15px;
+        margin-top: 60px;
+    }
+
+    .brand-container {
+        margin: 10px;
+        padding-bottom: 15px;
+        margin-top: 60px;
+    }
+
+    .brand-section {
+        padding: 8px 15px;
+    }
+
+    .nav-logo {
+        width: 35px;
+        height: 35px;
+    }
+
+    .company-name {
+        font-size: 20px;
+    }
+}
+

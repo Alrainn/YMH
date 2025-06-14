@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Giriş Sayfası - BIOWORKS</title>
+</head>
+<body>
+    <div class="container">
+        <div class="left-content">
+            <h1 class="company-name">BIOWORKS</h1>
+            <div class="underline"></div>
+        </div>
+        <div class="login-container">
+            <div class="login-box">
+                <h2 class="login-title">Giriş Yap</h2>
+                <form class="login-form">
+                    <div class="form-group">
+                        <label for="email">E-posta</label>
+                        <input type="email" id="email" name="email" placeholder="E-posta adresinizi giriniz" required class="form-rounded">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Şifre</label>
+                        <div style="position:relative;">
+                            <input type="password" id="password" name="password" placeholder="Şifrenizi giriniz" required class="form-password" style="padding-right:40px;">
+                            <span class="toggle-password" toggle="#password" style="position:absolute;top:50%;right:12px;transform:translateY(-50%);cursor:pointer;"><i class="fa fa-eye"></i></span>
+                        </div>
+                    </div>
+                    <div class="form-group remember-me">
+                        <div class="remember-forgot">
+                            <div class="remember">
+                                <input type="checkbox" id="remember" name="remember">
+                                <label for="remember">Beni hatırla</label>
+                            </div>
+                            <a href="forgot_password.html" class="forgot-link">Şifremi Unuttum</a>
+                        </div>
+                    </div>
+                    <button type="submit" class="login-button">Giriş Yap</button>
+                    <div class="guest-section">
+                        <a href="main_page.html" class="guest-button">Misafir Olarak Devam Et</a>
+                        <div class="register-section">
+                            <a href="register.html" class="register-link">Kayıt Ol</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="../js/bioscript.js"></script>
+</body>
+</html> 

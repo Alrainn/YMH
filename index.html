@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönlendiriliyor...</title>
+    <link rel="stylesheet" href="BIOWORKS(new)/html-css/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+      body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image: url('BIOWORKS(new)/photos/a-resim/black_grenn_gradients.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+      .redirect-box {
+        background: rgba(255,255,255,0.13);
+        border-radius: 24px;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+        backdrop-filter: blur(12px);
+        border: 1.5px solid rgba(76, 175, 80, 0.18);
+        padding: 2.5rem 2.5rem 2rem 2.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 340px;
+      }
+      .redirect-logo {
+        width: 70px;
+        height: 70px;
+        object-fit: contain;
+        margin-bottom: 10px;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+      }
+      .redirect-title {
+        font-size: 2.1rem;
+        color: #4CAF50;
+        font-weight: 700;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.13);
+      }
+      .redirect-message {
+        color: #fff;
+        font-size: 1.18rem;
+        margin-bottom: 18px;
+        text-align: center;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.18), 0 1px 0 #333;
+      }
+      .redirect-spinner {
+        font-size: 2.5rem;
+        color: #4CAF50;
+        margin-bottom: 10px;
+        animation: spin 1.2s linear infinite;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+    <script>
+      // 2 saniye bekledikten sonra yönlendir
+      setTimeout(function () {
+        window.location.href = "BIOWORKS(new)/html-css/html/index.html";
+      }, 2000);
+    </script>
+  </head>
+  <body>
+    <div class="redirect-box">
+      <img src="BIOWORKS(new)/photos/a-resim/AI-logo.png" alt="Bioworks Logo" class="redirect-logo">
+      <div class="redirect-title">BIOWORKS</div>
+      <div class="redirect-message">Sayfa yönlendiriliyor, lütfen bekleyin...</div>
+      <div class="redirect-spinner"><i class="fas fa-spinner"></i></div>
+    </div>
+  </body>
+</html>

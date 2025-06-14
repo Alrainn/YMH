@@ -1,0 +1,414 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #3d7183;
+    color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.logo-container img {
+    height: 50px;
+    margin-right: 15px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    flex: 2;
+    justify-content: center;
+}
+
+nav li {
+    margin-left: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.right-space {
+    flex: 1;
+}
+
+.hero {
+    background-image: url("a-resim/bio-arkaplan001.jpg");
+    background-size: cover;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 100px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.hero hr {
+    width: 200px;
+    border: 2px solid #8fbc8f;
+}
+
+.ai-model {
+    padding: 50px;
+    text-align: center;
+}
+
+.featured-content {
+    padding: 50px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.content-item {
+    width: 30%;
+    text-align: center;
+}
+
+.content-item img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+}
+
+footer {
+    background-color: #3d7183;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Hakkımızda Sayfası Stilleri */
+
+.about-us {
+    padding: 50px;
+    background-image: url('/a-resim/mesh-gradient.png');
+    /* Arka plan resminin yolu */
+    background-size: cover;
+    /* Resmi tüm alanı kaplayacak şekilde ayarlar */
+    background-repeat: no-repeat;
+    /* Resmi tekrar etmeyi engeller */
+    background-attachment: fixed;
+    /* Sabit arka plan (isteğe bağlı) */
+    background-color: rgba(255, 255, 255, 0.8);
+    /* Yazıların okunurluğunu artırmak için yarı saydam beyaz arka plan */
+    color: white;
+}
+
+.about-us h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.mission,
+.vision,
+.team,
+.goals {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.team-members {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.team-member {
+    text-align: center;
+    position: relative;
+}
+
+.team-member-image {
+    position: relative;
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+.team-member-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    overflow: hidden;
+    /* İçerik taşmasını önler */
+}
+
+.team-member:hover .team-member-info {
+    opacity: 1;
+}
+
+.goals ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.goals li {
+    margin-bottom: 20px;
+}
+
+/* Sosyal medya logoları için stiller */
+.team-member-info img {
+    width: 25px;
+    /* Logoların genişliğini 25 piksel olarak ayarlar */
+    height: 25px;
+    /* Logoların yüksekliğini 25 piksel olarak ayarlar */
+    margin: 5px;
+    /* Logoların aralarındaki boşluğu ayarlar */
+}
+
+/* Tabletler için (768px'e kadar) */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        /* Menüyü dikey olarak sırala */
+        align-items: center;
+        /* Menü öğelerini ortala */
+    }
+
+    nav li {
+        margin-left: 0;
+        margin-bottom: 10px;
+        /* Menü öğeleri arasında boşluk bırak */
+    }
+
+    .featured-content {
+        flex-direction: column;
+        /* İçerik öğelerini dikey olarak sırala */
+        align-items: center;
+        /* İçerik öğelerini ortala */
+    }
+
+    .content-item {
+        width: 80%;
+        /* İçerik öğelerinin genişliğini ayarla */
+        margin-bottom: 20px;
+        /* İçerik öğeleri arasında boşluk bırak */
+    }
+
+    .team-members {
+        grid-template-columns: 1fr;
+        /* Ekip üyelerini tek sütunda göster */
+    }
+}
+
+/* Tabletler için (768px'e kadar) */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        /* Menüyü dikey olarak sırala */
+        align-items: center;
+        /* Menü öğelerini ortala */
+    }
+
+    nav li {
+        margin-left: 0;
+        margin-bottom: 10px;
+        /* Menü öğeleri arasında boşluk bırak */
+    }
+
+    .featured-content {
+        flex-direction: column;
+        /* İçerik öğelerini dikey olarak sırala */
+        align-items: center;
+        /* İçerik öğelerini ortala */
+    }
+
+    .content-item {
+        width: 80%;
+        /* İçerik öğelerinin genişliğini ayarla */
+        margin-bottom: 20px;
+        /* İçerik öğeleri arasında boşluk bırak */
+    }
+
+    .team-members {
+        grid-template-columns: 1fr;
+        /* Ekip üyelerini tek sütunda göster */
+    }
+}
+
+/* Tabletler için (768px'e kadar) */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        /* Menüyü dikey olarak sırala */
+        align-items: center;
+        /* Menü öğelerini ortala */
+    }
+
+    nav li {
+        margin-left: 0;
+        margin-bottom: 10px;
+        /* Menü öğeleri arasında boşluk bırak */
+    }
+
+    .featured-content {
+        flex-direction: column;
+        /* İçerik öğelerini dikey olarak sırala */
+        align-items: center;
+        /* İçerik öğelerini ortala */
+    }
+
+    .content-item {
+        width: 80%;
+        /* İçerik öğelerinin genişliğini ayarla */
+        margin-bottom: 20px;
+        /* İçerik öğeleri arasında boşluk bırak */
+    }
+
+    .team-members {
+        grid-template-columns: 1fr;
+        /* Ekip üyelerini tek sütunda göster */
+    }
+}
+
+/* Telefonlar için (480px'e kadar) */
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2em;
+        /* Başlık boyutunu küçült */
+    }
+
+    .about-us h2 {
+        font-size: 1.8em;
+        /* Başlık boyutunu küçült */
+    }
+
+    .team-member img {
+        width: 120px;
+        /* Ekip üyesi resim boyutunu küçült */
+        height: 120px;
+        /* Ekip üyesi resim boyutunu küçült */
+    }
+}
+
+/* Chat Container Styles */
+.chat-container {
+    max-width: 800px;
+    margin: 20px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.chat-messages {
+    height: 400px;
+    overflow-y: auto;
+    padding: 20px;
+    background: #f5f5f5;
+}
+
+.message {
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    border-radius: 15px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+.user-message {
+    background: #007bff;
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 5px;
+}
+
+.ai-message {
+    background: #e9ecef;
+    color: #212529;
+    margin-right: auto;
+    border-bottom-left-radius: 5px;
+}
+
+.error-message {
+    background: #dc3545;
+    color: white;
+    margin-right: auto;
+    border-bottom-left-radius: 5px;
+}
+
+.chat-input {
+    display: flex;
+    padding: 20px;
+    background: white;
+    border-top: 1px solid #dee2e6;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.chat-input button {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+.chat-input button:hover {
+    background: #0056b3;
+}
+
+/* Scrollbar Styles */
+.chat-messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

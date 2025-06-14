@@ -1,0 +1,427 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-image: url(../../photos/a-resim/black_grenn_gradients.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.left-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-right: 50px;
+}
+
+.company-name {
+    font-size: 48px;
+    color: #4CAF50;
+    margin-bottom: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.underline {
+    width: 100px;
+    height: 4px;
+    background-color: #4CAF50;
+    border-radius: 2px;
+}
+
+.login-container {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.login-box {
+    background: #fff;
+    padding: 56px 48px;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    width: 520px;
+}
+
+.login-box h2 {
+    color: #4CAF50;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.login-title {
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-size: 14px;
+}
+
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.remember-me input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
+.login-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #45a049;
+}
+
+.forgot-password {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.forgot-password a {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.forgot-password a:hover {
+    color: #4CAF50;
+}
+
+.separator {
+    color: #666;
+    font-size: 14px;
+}
+
+.register-link {
+    color: #4CAF50 !important;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.register-link:hover {
+    color: #45a049 !important;
+}
+
+.login-link {
+    font-weight: 600;
+    color: #4CAF50 !important;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.login-link:hover {
+    color: #388e3c !important;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+.half-width {
+    flex: 1;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #ddd;
+    border-radius: 30px;
+    font-size: 15px;
+    background: #fafafa;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus {
+    border-color: #4CAF50;
+    background: #fff;
+}
+
+.form-group select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #ddd;
+    border-radius: 30px;
+    font-size: 15px;
+    background: #fafafa;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%234CAF50" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    background-size: 22px 22px;
+}
+
+.form-group select:focus {
+    border-color: #4CAF50;
+    background: #fff;
+}
+
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.forgot-link {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.forgot-link:hover {
+    color: #333;
+    text-decoration: underline;
+}
+
+.guest-section {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.guest-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.register-section {
+    margin-top: 15px;
+}
+
+.guest-button:hover {
+    background-color: #e0e0e0;
+}
+
+input[type="text"].password-visible {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #ddd;
+    border-radius: 30px;
+    font-size: 15px;
+    background: #fafafa;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input.form-password {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #ddd;
+    border-radius: 30px;
+    font-size: 15px;
+    background: #fafafa;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input.form-password:focus {
+    border-color: #4CAF50;
+    background: #fff;
+}
+
+.form-group input.form-rounded {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #ddd;
+    border-radius: 30px;
+    font-size: 15px;
+    background: #fafafa;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input.form-rounded:focus {
+    border-color: #4CAF50;
+    background: #fff;
+}
+
+/* Mobil Uyumluluk */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .left-content {
+        padding-right: 0;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .company-name {
+        font-size: 36px;
+    }
+
+    .login-container {
+        justify-content: center;
+    }
+
+    .login-box {
+        width: 100%;
+        max-width: 400px;
+        padding: 30px 20px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .half-width {
+        width: 100%;
+    }
+
+    .remember-forgot {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group input[type="email"],
+    .form-group input[type="password"],
+    .form-group select {
+        font-size: 16px; /* iOS'ta zoom sorununu önlemek için */
+    }
+}
+
+/* Tablet Uyumluluk */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        padding: 15px;
+    }
+
+    .login-box {
+        width: 100%;
+        max-width: 450px;
+    }
+
+    .company-name {
+        font-size: 42px;
+    }
+}
+
+/* Yeni eklenen mobil uyumluluk kuralları */
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    .company-name {
+        font-size: 32px;
+    }
+
+    .login-box {
+        padding: 20px 15px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+    }
+
+    .login-button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

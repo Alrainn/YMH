@@ -1,0 +1,17 @@
+com\melihawci\springrestapi\service\ChatService.class
+com\melihawci\springrestapi\model\ChatHistory.class
+com\melihawci\springrestapi\dto\ChatRequest.class
+com\melihawci\springrestapi\model\QuestionAnswer.class
+com\melihawci\springrestapi\service\AIService.class
+com\melihawci\springrestapi\controller\UserController.class
+com\melihawci\springrestapi\dto\ChatResponse.class
+com\melihawci\springrestapi\SpringRestApiApplication.class
+com\melihawci\springrestapi\controller\ChatController.class
+com\melihawci\springrestapi\repository\ChatHistoryRepository.class
+com\melihawci\springrestapi\repository\UserRepository.class
+com\melihawci\springrestapi\model\User.class
+com\melihawci\springrestapi\config\SecurityConfig.class
+com\melihawci\springrestapi\config\WebConfig.class
+com\melihawci\springrestapi\repository\QuestionAnswerRepository.class
+com\melihawci\springrestapi\controller\AuthController.class
+com\melihawci\springrestapi\service\UserService.class

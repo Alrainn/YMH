@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Bioworks AI - Ana Sayfa</title>
+</head>
+
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="/a-resim/AI LOGO.png" alt="AI Logo">
+            BIOWORKS AI
+        </div>
+        <nav>
+            <ul>
+                <li><a href="anasayfa.html">Ana Sayfa</a></li>
+                <li><a href="icerikler.html">İçerikler</a></li>
+                <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                <li><a href="iletisim.html">İletişim</a></li>
+                <li><a href="profil.html">Profil</a></li>
+
+            </ul>
+        </nav>
+        <div class="right-space"> </div>
+    </header>
+
+    <section class="hero">
+        <h1>Biyoloji ve Yapay Zeka ile Yeni Bir Çağ</h1>
+        <p>Biyoloji alanındaki en son gelişmeleri yapay zeka ile birleştiriyoruz.</p>
+        <hr>
+    </section>
+
+    <section class="ai-model">
+        <h2>Yapay Zeka Modelimiz</h2>
+        <p>İlaçlarınız ve sağlık durumunuz hakkında merak ettikleriniz mi var? Yapay zeka modelimiz, girdiğiniz
+            bilgileri analiz ederek size yardımcı olabilir. Sorularınızı sorun ve olası hastalıklar hakkında bilgi
+            edinin. Unutmayın, bu bir başlangıç noktasıdır ve her zaman bir doktora danışmanız en iyisidir.</p>
+        
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <!-- Mesajlar buraya gelecek -->
+            </div>
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Sorunuzu yazın...">
+                <button onclick="sendMessage()">Gönder</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 BIOWORKS AI</p>
+    </footer>
+
+    <script>
+        async function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const chatMessages = document.getElementById('chatMessages');
+            const question = userInput.value.trim();
+            
+            if (!question) return;
+
+            // Kullanıcı mesajını ekle
+            appendMessage('user', question);
+            userInput.value = '';
+
+            try {
+                // Backend'e istek gönder
+                const response = await fetch('http://localhost:8080/api/ai/ask', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'text/plain'
+                    },
+                    body: question
+                });
+
+                const data = await response.json();
+                
+                // AI cevabını ekle
+                appendMessage('ai', data.answer);
+            } catch (error) {
+                console.error('Error:', error);
+                appendMessage('error', 'Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.');
+            }
+        }
+
+        function appendMessage(type, message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}-message`;
+            messageDiv.textContent = message;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Enter tuşu ile mesaj gönderme
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+
+</html>

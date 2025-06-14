@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/main_page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../css/main_page_chatbox.css">
+    <title>Ana Sayfa - BIOWORKS</title>
+</head>
+<body>
+    <!-- Sol Panel -->
+    <aside class="left-panel">
+        <div class="brand-container">
+            <a href="main_page.html" class="brand-section">
+                <img src="../../photos/a-resim/AI-logo.png" alt="Logo" class="nav-logo">
+                <h1 class="company-name">BIOWORKS</h1>
+            </a>
+        </div>
+        <div class="chat-content">
+            <div class="chat-actions-col">
+                <div class="chat-actions-row">
+                    <div class="chat-search-box">
+                        <i class="fa fa-search"></i>
+                        <input type="text" id="chatSearchInput" placeholder="Sohbetlerde ara...">
+                    </div>
+                    <button class="delete-all-chats-btn" title="Tüm Sohbetleri Sil">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+                <button class="new-chat-button">
+                    <i class="fa-solid fa-plus"></i> Yeni Sohbet
+                </button>
+            </div>
+            <div class="chat-list">
+                <!-- Sohbet geçmişi buraya dinamik olarak yüklenecek -->
+            </div>
+        </div>
+    </aside>
+
+    <!-- Ana İçerik Alanı -->
+    <main class="main-area">
+        <!-- Üst Panel -->
+        <nav class="top-panel">
+            <div class="nav-container">
+                <div class="nav-right">
+                    <a href="main_page.html" class="nav-link active"><i class="fa-solid fa-house"></i> Ana Sayfa</a>
+                    <a href="about.html" class="nav-link"><i class="fas fa-users"></i> Hakkımızda</a>
+                    <a href="communication.html" class="nav-link"><i class="fa-solid fa-envelope"></i> İletişim</a>
+                    <a href="profile.html" class="nav-link"><i class="fas fa-user"></i> Profil</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Ana İçerik -->
+        <div class="content-area">
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Mesajlar buraya gelecek -->
+                </div>
+                <div class="chat-input-container">
+                    <textarea 
+                        class="chat-input" 
+                        placeholder="Mesajınızı yazın..." 
+                        id="messageInput"
+                    ></textarea>
+                    <button class="send-button">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript dosyaları -->
+    <script src="../js/main_page.js"></script>
+    <script src="../js/main_page_chatbox.js"></script>
+    <div id="toast-notification"></div>
+</body>
+</html>

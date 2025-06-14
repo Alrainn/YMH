@@ -1,0 +1,64 @@
+# Git ve versiyon kontrolü ile ilgili her şey
+.git/
+.gitignore
+.gitattributes
+
+# Python'a özel dosyalar (imaj içinde yeniden oluşabilir veya gereksizdir)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Sanal ortam klasörleri (Docker kendi ortamını kuracak)
+venv/
+.venv/
+env/
+ENV/
+ENVS/
+
+# Hassas Bilgiler (KESİNLİKLE imaja girmemeli!)
+.env
+.env.*
+secrets.yaml
+*.pem
+*.key
+
+# IDE ve Editör Ayar Klasörleri
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+
+# İşletim Sistemine Özel Dosyalar
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Log Dosyaları (konteyner logları Docker üzerinden yönetilmeli)
+*.log
+logs/
+
+# Test kodları ve raporları (genellikle imajda olmasına gerek yoktur)
+tests/          # Eğer testleriniz ayrı bir 'tests' klasöründeyse
+test_reports/
+htmlcov/
+.coverage
+.pytest_cache/
+
+# Dockerfile ve .dockerignore'ın kendisi (imaj içinde olmalarına gerek yok)
+Dockerfile
+.dockerignore
+docker-compose.yml # Eğer varsa ve imaj içinde gerekmiyorsa
+
+# README ve diğer dokümantasyon (imaj içinde gerekmiyorsa)
+README.md
+docs/
+
+# Eğer varsa büyük veri dosyaları veya modeller (bunlar imaja runtime'da bağlanmalı veya build sırasında indirilmeli)
+# *.csv
+# *.h5
+# *.pth
+# data/
+# models/

@@ -1,0 +1,83 @@
+# Python'a özel dosyalar ve klasörler
+__pycache__/
+*.py[cod]  # .pyc (byte code), .pyo (optimized), .pyd (other)
+*$py.class # Jython
+*.so       # C extensions
+
+# Sanal Ortamlar (Conda ortamı Dockerfile'da kurulacak olsa da, yerel venv'leri ignore etmek iyi bir pratiktir)
+venv/
+.venv/
+env/
+ENV/
+ENVS/
+pip-selfcheck.json
+
+# Paketleme ve build çıktıları
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/            # Eğer log, cache gibi geçici veriler içeriyorsa
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# IDE ve Editör Ayar Klasörleri
+.idea/          # JetBrains IDE'leri (PyCharm, IntelliJ IDEA)
+.vscode/        # Visual Studio Code
+*.sublime-project
+*.sublime-workspace
+nbproject/      # NetBeans
+*.swp           # Vim swap dosyaları
+*.swo
+
+# İşletim Sistemine Özel Dosyalar
+.DS_Store       # macOS
+Thumbs.db       # Windows
+Desktop.ini     # Windows
+
+# Log Dosyaları
+*.log
+logs/
+
+# Test ve Raporlama Çıktıları
+htmlcov/        # HTML coverage report
+.coverage
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+test_reports/
+
+# Hassas Bilgiler (ÖNEMLİ!)
+.env            # Ortam değişkenlerini içeren dosyalar
+.env.* # .env.local, .env.development gibi dosyalar
+secrets.yaml
+*.pem
+*.key
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints
+
+# Conda (bazı durumlarda Conda'nın oluşturduğu geçici dosyalar)
+# pkgs/ # Eğer yerel bir pkgs cache'i oluşursa ve reponuzda istemiyorsanız
+
+# Eğer varsa büyük veri dosyaları veya modeller (Git LFS düşünülmeli ya da hiç eklenmemeli)
+# *.csv
+# *.h5
+# *.pth
+# data/
+# models/
+
+# Docker'a özel dosyalar (bunlar Git'te olmalı, o yüzden burada değiller)
+# Dockerfile
+# .dockerignore
+# docker-compose.yml

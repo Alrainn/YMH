@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+    <title>Profil - BIOWORKS</title>
+</head>
+<body>
+    <!-- Sol Panel -->
+    <aside class="left-panel">
+        <div class="brand-container">
+            <a href="main_page.html" class="brand-section">
+                <img src="../../photos/a-resim/AI-logo.png" alt="Logo" class="nav-logo">
+                <h1 class="company-name">BIOWORKS</h1>
+            </a>
+        </div>
+        <div class="side-userbox">
+            <img src="../../photos/a-resim/kullanıcı-foto.jpg" alt="Profil" class="side-profile-photo">
+            <div class="side-username">Hoş geldiniz,<br><b>Kullanıcı Adı</b></div>
+        </div>
+        <div class="side-quickmenu">
+            <a href="main_page.html" title="Ana Sayfa"><i class="fa-solid fa-house"></i></a>
+            <a href="profile.html" title="Profil"><i class="fas fa-user"></i></a>
+            <a href="#" title="Çıkış Yap"><i class="fa-solid fa-right-from-bracket"></i></a>
+        </div>
+        <div class="side-info">
+            <i class="fa-solid fa-circle-info"></i> Profil bilgilerinizi güncel tutun!
+        </div>
+    </aside>
+
+    <!-- Ana İçerik Alanı -->
+    <main class="main-area">
+        <!-- Üst Panel -->
+        <nav class="top-panel">
+            <div class="nav-container">
+                <div class="nav-right">
+                    <a href="main_page.html" class="nav-link"><i class="fa-solid fa-house"></i> Ana Sayfa</a>
+                    <a href="about.html" class="nav-link"><i class="fas fa-users"></i> Hakkımızda</a>
+                    <a href="communication.html" class="nav-link"><i class="fa-solid fa-envelope"></i> İletişim</a>
+                    <a href="profile.html" class="nav-link active"><i class="fas fa-user"></i> Profil</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Profil Sayfası Blokları -->
+        <div class="content-area profile-blocks-area">
+            <!-- Profil Bilgileri Card -->
+            <div class="profile-card-wide profile-block">
+                <div class="profile-main-row">
+                    <div class="profile-photo-wrapper-wide">
+                        <img src="../../photos/a-resim/kullanıcı-foto.jpg" alt="Profil Fotoğrafı" class="profile-photo-wide" id="profileImage">
+                        <button class="change-photo-btn-wide" title="Profil fotoğrafını değiştir" id="changePhotoBtn" type="button">
+                            <i class="fa-solid fa-camera"></i>
+                        </button>
+                        <input type="file" id="profilePhotoInput" accept="image/*" style="display:none">
+                        <div class="profile-photo-label">Profil Fotoğrafı</div>
+                    </div>
+                    <form class="profile-form-wide">
+                        <div class="form-group">
+                            <label for="fullName">Ad Soyad</label>
+                            <input type="text" id="fullName" name="fullName" placeholder="Ad Soyad" class="form-rounded">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-posta</label>
+                            <input type="email" id="email" name="email" placeholder="ornek@email.com" class="form-rounded">
+                        </div>
+                        <button type="submit" class="save-btn">
+                            <i class="fa-solid fa-save"></i> Bilgileri Güncelle
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Şifre Değiştir Card -->
+            <div class="profile-card-wide profile-block">
+                <form class="password-form">
+                    <h3><i class="fa-solid fa-lock"></i> Şifre Değiştir</h3>
+                    <div class="form-group">
+                        <label for="currentPassword">Mevcut Şifre</label>
+                        <input type="password" id="currentPassword" name="currentPassword" class="form-rounded">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">Yeni Şifre</label>
+                        <input type="password" id="newPassword" name="newPassword" class="form-rounded">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Yeni Şifre (Tekrar)</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" class="form-rounded">
+                    </div>
+                    <button type="submit" class="save-btn">
+                        <i class="fa-solid fa-key"></i> Şifreyi Güncelle
+                    </button>
+                </form>
+            </div>
+            <!-- Çıkış Yap Card -->
+            <div class="profile-card-wide profile-block logout-block">
+                <button class="logout-btn">
+                    <i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap
+                </button>
+            </div>
+        </div>
+    </main>
+    <div id="toast-notification"></div>
+    <!-- Cropper Modal -->
+    <div id="cropperModal" style="display:none; position:fixed; z-index:5000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
+        <div style="background:#222; padding:32px 24px; border-radius:18px; box-shadow:0 4px 24px #000; max-width:90vw; max-height:90vh; display:flex; flex-direction:column; align-items:center;">
+            <img id="cropperImage" src="#" alt="Kırpılacak Fotoğraf" style="max-width:400px; max-height:400px; display:block; background:#fff; border-radius:12px; margin-bottom:18px;">
+            <div style="display:flex; gap:18px;">
+                <button id="cropperCancelBtn" style="padding:10px 24px; border-radius:8px; background:#c62828; color:#fff; border:none; font-weight:600; cursor:pointer;">İptal</button>
+                <button id="cropperSaveBtn" style="padding:10px 24px; border-radius:8px; background:#4CAF50; color:#fff; border:none; font-weight:600; cursor:pointer;">Kırp ve Kaydet</button>
+            </div>
+        </div>
+    </div>
+    <script src="../js/profile.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+</body>
+</html>

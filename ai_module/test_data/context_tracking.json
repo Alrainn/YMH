@@ -1,0 +1,120 @@
+{
+    "test_cases": [
+        {
+            "id": "CTX_001",
+            "description": "Temel bağlam takibi",
+            "conversation": [
+                {
+                    "role": "user",
+                    "content": "Gripin ilacı hakkında bilgi almak istiyorum"
+                },
+                {
+                    "role": "assistant",
+                    "content": "Gripin hakkında bilgi vermekten memnuniyet duyarım. Bu ilaç genellikle grip ve soğuk algınlığı tedavisinde kullanılır. Hangi konuda bilgi almak istersiniz?"
+                },
+                {
+                    "role": "user",
+                    "content": "Yan etkileri nelerdir?"
+                }
+            ],
+            "expected_response_contains": [
+                "gripin",
+                "yan etki",
+                "doktor"
+            ]
+        },
+        {
+            "id": "CTX_002",
+            "description": "Doz bilgisi bağlam takibi",
+            "conversation": [
+                {
+                    "role": "user",
+                    "content": "Gripin 500mg kullanıyorum"
+                },
+                {
+                    "role": "assistant",
+                    "content": "Gripin 500mg kullanıyorsunuz. Bu doz hakkında endişeleriniz mi var?"
+                },
+                {
+                    "role": "user",
+                    "content": "Bu doz fazla mı?"
+                }
+            ],
+            "expected_response_contains": [
+                "500mg",
+                "doz",
+                "doktor"
+            ]
+        },
+        {
+            "id": "CTX_003",
+            "description": "Duygusal bağlam takibi",
+            "conversation": [
+                {
+                    "role": "user",
+                    "content": "İlacın yan etkilerinden korktum"
+                },
+                {
+                    "role": "assistant",
+                    "content": "Yan etkilerden korkmanız çok doğal. Hangi yan etkiler sizi özellikle endişelendiriyor?"
+                },
+                {
+                    "role": "user",
+                    "content": "Yan etkileri okudum, ciddi bir yan etkisi yok ama gene de korktum"
+                }
+            ],
+            "expected_response_contains": [
+                "korku",
+                "anlıyorum",
+                "destek"
+            ]
+        },
+        {
+            "id": "CTX_004",
+            "description": "Çoklu ilaç bağlam takibi",
+            "conversation": [
+                {
+                    "role": "user",
+                    "content": "Gripin ve Deloday kullanıyorum"
+                },
+                {
+                    "role": "assistant",
+                    "content": "Gripin ve Deloday kullanıyorsunuz. Bu ilaçların birlikte kullanımı hakkında endişeleriniz mi var?"
+                },
+                {
+                    "role": "user",
+                    "content": "Evet, etkileşime girerler mi?"
+                }
+            ],
+            "expected_response_contains": [
+                "gripin",
+                "deloday",
+                "etkileşim",
+                "doktor"
+            ]
+        },
+        {
+            "id": "CTX_005",
+            "description": "Zaman bazlı bağlam takibi",
+            "conversation": [
+                {
+                    "role": "user",
+                    "content": "Gripin ilacını 2 haftadır kullanıyorum"
+                },
+                {
+                    "role": "assistant",
+                    "content": "Gripin ilacını 2 haftadır kullanıyorsunuz. İlacın etkisini hissediyor musunuz?"
+                },
+                {
+                    "role": "user",
+                    "content": "Evet, ama yan etkileri de var"
+                }
+            ],
+            "expected_response_contains": [
+                "2 hafta",
+                "yan etki",
+                "doktor"
+            ]
+        }
+    ]
+} 

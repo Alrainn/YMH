@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/communication.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>İletişim - BIOWORKS</title>
+</head>
+<body>
+    <!-- Sol Panel -->
+    <aside class="left-panel">
+        <div class="brand-container">
+            <a href="main_page.html" class="brand-section">
+                <img src="../../photos/a-resim/AI-logo.png" alt="Logo" class="nav-logo">
+                <h1 class="company-name">BIOWORKS</h1>
+            </a>
+        </div>
+        <div class="side-widget">
+            <div class="side-clock-box">
+                <div class="side-clock" id="sideClock">12:00</div>
+            </div>
+            <div class="side-quote" id="sideQuote">Başarı, cesaretin çocuğudur.</div>
+        </div>
+        <canvas id="sideCanvas" width="220" height="120" style="margin:24px auto 0 auto;display:block;"></canvas>
+    </aside>
+
+    <!-- Ana İçerik Alanı -->
+    <main class="main-area">
+        <!-- Üst Panel -->
+        <nav class="top-panel">
+            <div class="nav-container">
+                <div class="nav-right">
+                    <a href="main_page.html" class="nav-link"><i class="fa-solid fa-house"></i> Ana Sayfa</a>
+                    <a href="about.html" class="nav-link"><i class="fas fa-users"></i> Hakkımızda</a>
+                    <a href="communication.html" class="nav-link active"><i class="fa-solid fa-envelope"></i> İletişim</a>
+                    <a href="profile.html" class="nav-link"><i class="fas fa-user"></i> Profil</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- İletişim Formu ve Bilgiler -->
+        <div class="content-area profile-blocks-area">
+            <div class="profile-block contact-header-block">
+                <h2 style="color:#4CAF50;"><i class="fa-solid fa-envelope"></i> İletişim Formu</h2>
+            </div>
+            <form class="contact-form" id="contactForm" style="width:100%; max-width:800px; margin:0 auto;">
+                <div class="profile-block">
+                    <div class="form-group">
+                        <label for="contactName">Ad Soyad</label>
+                        <input type="text" id="contactName" name="contactName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail">E-posta</label>
+                        <input type="email" id="contactEmail" name="contactEmail" required>
+                    </div>
+                </div>
+                <div class="profile-block">
+                    <div class="form-group">
+                        <label for="contactSubject">Konu</label>
+                        <input type="text" id="contactSubject" name="contactSubject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactMessage">Mesajınız</label>
+                        <textarea id="contactMessage" name="contactMessage" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="save-btn" style="width:100%; max-width:300px; margin: 1.2rem auto 0 auto; display:block;">
+                        <i class="fa-solid fa-paper-plane"></i> Gönder
+                    </button>
+                </div>
+            </form>
+            <div id="formMessage" class="form-message" style="max-width:800px; margin:0 auto; display:none;"></div>
+        </div>
+        <script src="../js/communication.js"></script>
+    </main>
+</body>
+</html>

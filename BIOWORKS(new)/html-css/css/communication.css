@@ -1,0 +1,236 @@
+/* İletişim Sayfası Özel Stilleri */
+
+.contact-header-block {
+    max-width: 800px !important;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2.2rem auto;
+}
+.contact-header-block h2 {
+    margin: 0;
+}
+.contact-form .profile-block {
+    max-width: 800px !important;
+    margin: 0 auto 2.2rem auto;
+}
+.contact-form .form-group label {
+    color: #388e3c;
+    font-weight: 600;
+    font-size: 1.08em;
+    letter-spacing: 0.2px;
+    margin-bottom: 0.3em;
+}
+.contact-form .form-group input[type="text"],
+.contact-form .form-group input[type="email"] {
+    width: 100%;
+    padding: 14px 24px;
+    border: 1.5px solid #4CAF50;
+    border-radius: 30px;
+    font-size: 1em;
+    background: #fff;
+    color: #222;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    margin-bottom: 1.1rem;
+}
+.contact-form .form-group input[type="text"]:focus,
+.contact-form .form-group input[type="email"]:focus {
+    border-color: #388e3c;
+    box-shadow: 0 0 0 2px rgba(76,175,80,0.13);
+}
+
+/* Mesaj kutusu (textarea) modern stil */
+.contact-form .form-group textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 16px 24px;
+    border: 1.5px solid #4CAF50;
+    border-radius: 30px;
+    font-size: 1em;
+    background: #fff;
+    color: #222;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    margin-bottom: 1.1rem;
+    box-sizing: border-box;
+}
+.contact-form .form-group textarea:focus {
+    border-color: #388e3c;
+    box-shadow: 0 0 0 2px rgba(76,175,80,0.13);
+}
+
+/* Gönder butonu modern ve büyük */
+.contact-form .save-btn {
+    background: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 1rem 0;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(76,175,80,0.10);
+    transition: all 0.3s;
+    justify-content: center;
+    width: 100%;
+    max-width: 300px;
+    margin: 1.2rem auto 0 auto;
+}
+.contact-form .save-btn:hover {
+    background: #388e3c;
+    transform: translateY(-2px);
+}
+
+.form-message {
+    margin-top: 1.5rem;
+    padding: 1.1rem 1.5rem;
+    border-radius: 14px;
+    font-size: 1.08em;
+    font-weight: 600;
+    text-align: center;
+    display: none;
+    transition: all 0.3s;
+}
+.form-message.success {
+    background: #e8f5e9;
+    color: #388e3c;
+    border: 1.5px solid #4CAF50;
+    box-shadow: 0 2px 8px rgba(76,175,80,0.10);
+}
+.form-message.error {
+    background: #ffebee;
+    color: #c62828;
+    border: 1.5px solid #dc3545;
+    box-shadow: 0 2px 8px rgba(220,53,69,0.10);
+}
+
+.side-widget {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 32px 0 0 0;
+}
+.side-clock-box {
+    background: rgba(34,49,36,0.85);
+    border-radius: 18px;
+    box-shadow: 0 2px 8px rgba(76,175,80,0.13);
+    padding: 18px 32px 12px 32px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.side-clock {
+    font-size: 2.2em;
+    color: #4CAF50;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 8px rgba(76,175,80,0.13);
+    margin: 0;
+}
+.side-quote {
+    color: #fff;
+    font-size: 1.08em;
+    text-align: center;
+    margin-bottom: 18px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 10px 16px;
+    box-shadow: 0 2px 8px rgba(76,175,80,0.07);
+    min-width: 160px;
+}
+#sideCanvas {
+    border-radius: 18px;
+    background: rgba(34,49,36,0.18);
+    box-shadow: 0 2px 8px rgba(76,175,80,0.07);
+}
+
+/* Mobil Uyumluluk */
+@media screen and (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+
+    .left-panel {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding-bottom: 20px;
+        margin-bottom: 60px;
+    }
+
+    .main-area {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .top-panel {
+        left: 0;
+        padding: 10px 0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+    }
+
+    .nav-container {
+        padding: 0 15px;
+    }
+
+    .nav-right {
+        width: 100%;
+        justify-content: space-between;
+        padding: 8px 15px;
+        background: transparent;
+    }
+
+    .nav-link {
+        padding: 6px 12px;
+        min-width: auto;
+        font-size: 14px;
+    }
+
+    .nav-link i {
+        font-size: 14px;
+    }
+
+    .content-area {
+        padding: 20px 15px;
+        margin-top: 60px;
+    }
+
+    .brand-container {
+        margin: 10px;
+        padding-bottom: 15px;
+        margin-top: 60px;
+    }
+
+    .brand-section {
+        padding: 8px 15px;
+    }
+
+    .nav-logo {
+        width: 35px;
+        height: 35px;
+    }
+
+    .company-name {
+        font-size: 20px;
+    }
+
+    .contact-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .contact-info, .contact-form {
+        width: 100%;
+    }
+} 

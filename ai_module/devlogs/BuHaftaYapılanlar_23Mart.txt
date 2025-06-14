@@ -1,0 +1,56 @@
+# YMH AI Asistan - Geliştirme Günlüğü
+Tarih: 23 Mart 2024
+
+## 🎯 Tamamlanan Özellikler
+
+### 1. Temel Altyapı
+- Flask web uygulaması kurulumu
+- OpenAI GPT-3.5 entegrasyonu
+- Google Search API entegrasyonu
+- FDA veri çekme sistemi
+
+### 2. API Endpoint'leri
+- `/api/chat` - Genel sohbet
+- `/api/drug-info` - İlaç bilgisi sorgulama
+- `/ask` - Basit soru-cevap
+
+### 3. Web Arayüzü
+- Ana sayfa tasarımı
+- İlaç arama formu
+- Sohbet arayüzü
+
+### 4. Güvenlik ve Performans
+- CORS yapılandırması
+- Rate limiting
+- Hata yönetimi
+- Docker desteği
+
+## 🔄 Devam Eden Çalışmalar
+
+### 1. İyileştirmeler
+- Daha doğal dil işleme
+- Daha hızlı yanıt süreleri
+- Daha iyi hata mesajları
+
+### 2. Dokümantasyon
+- README güncellemesi
+- API dokümantasyonu
+- Kurulum kılavuzu
+
+## 📝 Notlar
+- Uygulama şu anda stabil çalışıyor
+- Temel özellikler tamamlandı
+- Docker desteği eklendi
+- Güvenlik önlemleri alındı
+
+## 🎯 Gelecek Hedefler
+1. Daha fazla ilaç veritabanı entegrasyonu
+2. Daha gelişmiş duygu analizi
+3. Çoklu dil desteği genişletme
+4. Mobil uygulama desteği
+
+
+
+
+
+
